@@ -1,14 +1,15 @@
 package com.scaler.EcommProductService.controller;
 
 import com.scaler.EcommProductService.dto.ProductListResponseDTO;
+import com.scaler.EcommProductService.dto.ProductRequestDTO;
 import com.scaler.EcommProductService.dto.ProductResponseDTO;
 import com.scaler.EcommProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.awt.image.RescaleOp;
@@ -22,7 +23,7 @@ public class ProductController {
     @Qualifier("fakeStoreProductService")
     ProductService productService;
 
-    @GetMapping("/product")
+    @GetMapping("/products")
     public ResponseEntity getAllProducts(){
         /*ProductResponseDTO prod1 = new ProductResponseDTO();
         prod1.setId(1);
@@ -47,9 +48,28 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/product/1")
-    public ResponseEntity getProductById(){
-        ProductResponseDTO response = productService.getProductById(1);
+    @GetMapping("/products/{id}")
+    public ResponseEntity getProductById(@PathVariable("id") int id){
+        ProductResponseDTO response = productService.getProductById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/products")
+    public ResponseEntity createProduct(@RequestBody ProductRequestDTO productRequestDTO){
+        ProductResponseDTO response = new ProductResponseDTO();
+        response = productService.createProduct(productRequestDTO);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity deleteProductById(@PathVariable("id") int id){
+        boolean response = productService.deleteProduct(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity updateProductById(@PathVariable("id") int id, @RequestBody ProductRequestDTO productRequestDTO){
+        boolean response = productService.updateProduct(id, productRequestDTO);
         return ResponseEntity.ok(response);
     }
 }
