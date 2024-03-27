@@ -39,6 +39,11 @@ public class FakeStoreProductServiceImpl implements ProductService{
         return productList;
     }
 
+    //@Override
+    //public ProductListResponseDTO getProductsByTitle(String title, int pageSize, int pageNo) {
+    //    return null;
+    //}
+
     @Override
     public ProductResponseDTO getProductById(int id) throws ProductNotFoundException {
         FakeStoreProductResponseDTO fakeStoreProductResponseDTO = fakeStoreAPIClient.getProductById(id);
@@ -68,4 +73,5 @@ public class FakeStoreProductServiceImpl implements ProductService{
         restTemplate.put(updateProductURL, productRequestDTO ,ProductResponseDTO.class);
         return true;
     }
+
 }
