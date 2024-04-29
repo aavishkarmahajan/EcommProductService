@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProductService {
     //ProductListResponseDTO getProductsByTitle(String title, int pageSize, int pageNo);
-    ProductListResponseDTO getAllProducts();
+    ProductListResponseDTO getAllProducts() throws ProductNotFoundException;
     ProductResponseDTO getProductById(int id) throws ProductNotFoundException;
     ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO);
     boolean deleteProduct(int id);

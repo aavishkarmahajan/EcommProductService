@@ -3,6 +3,7 @@ package com.scaler.EcommProductService.service;
 import com.scaler.EcommProductService.dto.ProductListResponseDTO;
 import com.scaler.EcommProductService.dto.ProductRequestDTO;
 import com.scaler.EcommProductService.dto.ProductResponseDTO;
+import com.scaler.EcommProductService.exception.ProductNotFoundException;
 import com.scaler.EcommProductService.mapper.ProductMapper;
 import com.scaler.EcommProductService.model.Product;
 import com.scaler.EcommProductService.repository.ProductRepository;
@@ -16,16 +17,23 @@ public class ProductServiceImpl implements ProductService{
 
     ProductRepository productRepository;
 
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     //@Override
     //public ProductListResponseDTO getProductsByTitle(String title, int pageSize, int pageNo) {
     //    return null;
     //}
 
     @Override
-    public ProductListResponseDTO getAllProducts() {
+    public ProductListResponseDTO getAllProducts() throws ProductNotFoundException {
 
         List<Product> products = productRepository.findAll();
         ProductListResponseDTO productListResponseDTO = ProductMapper.productListToProductListResponseDTO(products);
+        if(productListResponseDTO == null){
+            throw new ProductNotFoundException("No Product found");
+        }
         return productListResponseDTO;
     }
 

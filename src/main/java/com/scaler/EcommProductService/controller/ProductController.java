@@ -27,7 +27,8 @@ public class ProductController {
     @Qualifier("ProductService")
     ProductService productService;
 
-    @GetMapping("/{title}")
+    @GetMapping("/")
+    //@GetMapping("/{title}")
     //public ResponseEntity getProductsByTitle(@RequestBody SearchRequestDTO searchRequestDTO) throws ProductNotFoundException{
     public ResponseEntity getAllProducts() throws ProductNotFoundException{
         /*ProductResponseDTO prod1 = new ProductResponseDTO();
@@ -54,6 +55,7 @@ public class ProductController {
                 searchRequestDTO.getPageSize(),
                 searchRequestDTO.getPageNumber()
         );*/
+
         ProductListResponseDTO response = productService.getAllProducts();
         return ResponseEntity.ok(response);
     }
